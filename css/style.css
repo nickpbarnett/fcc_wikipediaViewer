@@ -1,0 +1,42 @@
+body{
+	padding: 25px;
+}
+
+
+
+.jumbotron{
+	background-color: #38303d;
+	color: #d9bbed;
+}
+
+.well{
+	background-color: #884eaa;
+}
+
+.searchbox{
+	padding:20px;
+}
+
+#searchString{
+	color:black;
+}
+
+
+h1{
+	color:#fff !important;
+}
+
+.random{
+	color:#fff;
+	font-size: 30px;
+}
+
+/* unvisited link */
+a{
+    color: yellow;
+}
+
+/* mouse over link */
+a:hover {
+    color: hotpink;
+}

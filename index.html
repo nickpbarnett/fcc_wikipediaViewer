@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Nick's Wikipedia Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script src="https://use.fontawesome.com/0c0c22797e.js"></script>
+
+  <link rel= "stylesheet" type= "text/css" href= "./css/style.css">
+  <script>
+    $(document).ready(function() {
+
+      $("#getResults").on("click", function(){
+        var keyword = $('#searchString').val();
+  
+        //var keyword ="Jimi Hendrix";
+
+        var url= "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + keyword + "&prop=info&inprop=url&utf8=&format=json";
+        
+        $.ajax({
+          url: url,
+          dataType: "jsonp",
+     
+          success: function(data) {
+
+              var hits=data.query.searchinfo.totalhits;
+              if(hits=='0'){
+                location.reload(true);
+              }
+
+              var t="";
+              var link="";
+
+              for(i=0;i<10;i++){
+                title=data.query.search[i].title;
+                snippit=data.query.search[i].snippet;
+                pageid=data.query.search[i].pageid;
+                link="http://en.wikipedia.org/?curid="+pageid;
+
+
+                t=t+ "<div class=\"well\"><h3><a href="+link+" target=\"_blank\">"+title+"</a></h3>"+snippit+"<br><br></div>";
+
+                $("#res").html(t);
+              }
+          },
+
+          error: function () {
+            alert("Error retrieving search results, please refresh the page");
+          }
+
+        });
+ 
+      });
+
+    });
+
+  </script>
+</head>
+
+<body>
+  <div class="container text-center">
+    <div class="jumbotron">
+
+      <h1>Nick's Wikipedia Viewer</h1>
+      <Br>
+
+      <div class="random">
+         Click <a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank">here</a> for a random Wikipedia article
+         <br><br>
+         OR
+         <br><br>
+      </div> <!-- end .random -->
+
+
+          <input type="text" placeholder="Search" id="searchString">
+          <br><br>
+          <div class="input-group-btn">
+            <button class="btn btn-default" type="submit" id="getResults"><i class="glyphicon glyphicon-search"></i></button>
+          </div>
+
+          <br><br>
+
+
+
+      <div class="results">
+        <p id="res"></p>  
+      </div> <!-- end .results -->
+
+    </div> <!-- end .jumbotron -->
+
+  </div> <!-- end .container -->
+
+</body>
+
+</html>
+
